@@ -35,7 +35,12 @@
 			<artifactId>hibernate-jpamodelgen</artifactId>
 			<version>1.0.0.Final</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-jaxrs</artifactId>
+            <version>1.9.9</version>
+        </dependency>
+    </dependencies>
 	<build>
 		<finalName>j2ee-domains</finalName>
 		<plugins>
@@ -76,7 +81,8 @@
 				<artifactId>jboss-as-maven-plugin</artifactId>
 				<configuration>
 					<username>admin</username>
-					<password>1q2w3e</password>
+					<password>1q2w3e4@</password>
+					<hostname>${env.JHOST}</hostname>
 				</configuration>
 				<executions>
 					<execution>

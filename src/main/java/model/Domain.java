@@ -1,6 +1,9 @@
 package model;
 
+import org.codehaus.jackson.map.annotate.JsonView;
+
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -30,6 +33,10 @@ public class Domain implements Serializable {
 	private Integer refresh;
 	private Integer retry;
 	private Integer serial;
+
+	@OneToMany(mappedBy = "domainId")
+	@JsonView(Views.Internal.class)
+	private List<DnsRecord> records;
 	
 	public String getDomainName() {
 		return domainName;
@@ -80,4 +87,13 @@ public class Domain implements Serializable {
 	public void setSerial(Integer serial) {
 		this.serial = serial;
 	}
+
+	public List<DnsRecord> getRecords() {
+		return records;
+	}
+
+	public void setRecords(List<DnsRecord> records) {
+		this.records = records;
+	}
+
 }
