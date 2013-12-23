@@ -26,18 +26,23 @@ public class Domain implements Serializable {
 	@Column(name="mbox")
 	private String email;
 	
-	@Column(name="default_ttl")
-	private String ttl;
-	
 	private Integer expire;
 	private Integer refresh;
 	private Integer retry;
 	private Integer serial;
 
+	/*
 	@OneToMany(mappedBy = "domainId")
 	@JsonView(Views.Internal.class)
 	private List<DnsRecord> records;
-	
+	public List<DnsRecord> getRecords() {
+		return records;
+	}
+	public void setRecords(List<DnsRecord> records) {
+		this.records = records;
+	}
+	*/
+
 	public String getDomainName() {
 		return domainName;
 	}
@@ -56,12 +61,6 @@ public class Domain implements Serializable {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	public String getTtl() {
-		return ttl;
-	}
-	public void setTtl(String ttl) {
-		this.ttl = ttl;
 	}
 	public Integer getExpire() {
 		return expire;
@@ -87,13 +86,4 @@ public class Domain implements Serializable {
 	public void setSerial(Integer serial) {
 		this.serial = serial;
 	}
-
-	public List<DnsRecord> getRecords() {
-		return records;
-	}
-
-	public void setRecords(List<DnsRecord> records) {
-		this.records = records;
-	}
-
 }
