@@ -1,6 +1,0 @@
-message SecurityToken {
-  required int32 id = 1;
-  required string login = 2;
-  repeated string roles = 3;
-  required int64 expires = 4;
-}
