@@ -1,7 +1,5 @@
 package model;
 
-import org.codehaus.jackson.map.annotate.JsonView;
-
 import java.io.Serializable;
 import java.util.List;
 
