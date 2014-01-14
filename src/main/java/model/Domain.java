@@ -28,6 +28,8 @@ public class Domain implements Serializable {
 	private Integer refresh;
 	private Integer retry;
 	private Integer serial;
+	@Column(name="min_ttl")
+	private Integer minTtl;
 
 	/*
 	@OneToMany(mappedBy = "domainId")
@@ -83,5 +85,11 @@ public class Domain implements Serializable {
 	}
 	public void setSerial(Integer serial) {
 		this.serial = serial;
+	}
+	public Integer getMinTtl() {
+		return minTtl;
+	}
+	public void setMinTtl(Integer serial) {
+		this.minTtl = serial;
 	}
 }

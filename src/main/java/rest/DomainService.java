@@ -71,6 +71,7 @@ public class DomainService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/create")
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	@PermitAll
 	public void createDomain(Domain d) {
 		em.persist(d);
 	}
