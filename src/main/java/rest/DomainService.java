@@ -2,6 +2,7 @@ package rest;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -12,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.TransactionManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -28,14 +30,17 @@ import model.Domain;
 @Path("/domains")
 @RolesAllowed("domain-view")
 @PermitAll
+@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 public class DomainService {
 	@Inject
 	EntityManager em;
-	
+
+	@Resource(mappedName = "java:/TransactionManager")
+	private TransactionManager tm;
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@PermitAll
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public List<Domain> listDomains() {
 		CriteriaQuery<Domain> q = em.getCriteriaBuilder().createQuery(Domain.class);
 		Root<Domain> root = q.from(Domain.class);
@@ -46,7 +51,6 @@ public class DomainService {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	@PermitAll
 	public Domain getDomain(@PathParam("id") Integer id){
 		Domain d = em.find(Domain.class, id);
@@ -56,7 +60,6 @@ public class DomainService {
 	@GET
 	@Path("/{id}/records")
 	@Produces(MediaType.APPLICATION_JSON)
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	@PermitAll
 	public List<DnsRecord> getRecords(@PathParam("id") Integer id)
 	{
@@ -66,13 +69,19 @@ public class DomainService {
 		q.select(recordRoot).where(cb.equal(recordRoot.get(DnsRecord_.domainId), id));
 		return em.createQuery(q).getResultList();
 	}
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/create")
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@PermitAll
-	public void createDomain(Domain d) {
-		em.persist(d);
+	public void createDomain(Domain d) throws Exception {
+		String name = d.getDomainName();
+		for(int i=0; i<500; i++){
+			d.setId(null);
+			d.setDomainName(Integer.toString(i)+name);
+			tm.begin();
+			em.persist(d);
+			tm.commit();
+		}
 	}
 }

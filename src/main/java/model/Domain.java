@@ -13,8 +13,7 @@ public class Domain implements Serializable {
 	private static final long serialVersionUID = -4188406502809926438L;
 
 	@Id
-	@SequenceGenerator(name="domains_seq", sequenceName="domains_serial_seq")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="domains_seq")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="zone_id")
 	private Integer id;
 	
