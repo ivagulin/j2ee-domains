@@ -76,7 +76,7 @@ public class DomainService {
 	@PermitAll
 	public void createDomain(Domain d) throws Exception {
 		String name = d.getDomainName();
-		for(int i=0; i<500; i++){
+		for(int i=0; i<10; i++){
 			d.setId(null);
 			d.setDomainName(Integer.toString(i)+name);
 			tm.begin();
