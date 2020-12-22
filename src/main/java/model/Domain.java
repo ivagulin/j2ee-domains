@@ -26,7 +26,7 @@ public class Domain implements Serializable {
 	private Integer expire;
 	private Integer refresh;
 	private Integer retry;
-	private Integer serial;
+
 	@Column(name="min_ttl")
 	private Integer minTtl;
 
@@ -78,12 +78,6 @@ public class Domain implements Serializable {
 	}
 	public void setRetry(Integer retry) {
 		this.retry = retry;
-	}
-	public Integer getSerial() {
-		return serial;
-	}
-	public void setSerial(Integer serial) {
-		this.serial = serial;
 	}
 	public Integer getMinTtl() {
 		return minTtl;
